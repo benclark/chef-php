@@ -53,6 +53,9 @@ template "#{node['php']['conf_dir']}/php.ini" do
   owner 'root'
   group 'root'
   mode 00644
+  variables(
+    :params => node['php']
+  )
   notifies :restart, 'service[php-fpm]' if node['recipes'].include?('php::fpm') && platform_family?('rhel', 'fedora')
 end
 
