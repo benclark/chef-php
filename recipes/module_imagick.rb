@@ -1,10 +1,8 @@
 #
-# Author::  Panagiotis Papadomitsos (<pj@ezgr.net>)
+# Cookbook Name:: chef-php-extra
+# Recipe:: module_imagick
 #
-# Cookbook Name:: php
-# Recipe:: module_mcrypt
-#
-# Copyright 2009-2012, Panagiotis Papadomitsos
+# Copyright 2012, Alistair Stead
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,19 +18,19 @@
 #
 
 if node['php']['ius'] == "5.4"
-      packages = %w{ php54-mcrypt }
+  packages = %w{ php54-imagick }
 elsif node['php']['ius'] == "5.3"
-      packages = %w{ php53u-mcrypt }
+  packages = %w{ php53u-imagick }
 else
-      packages = %w{ php-mcrypt }
+  packages = %w{ php-imagick }
 end
 
 pkgs = value_for_platform(
-  [ "centos", "redhat", "fedora", "amazon", "scientific" ] => {
+  [ "centos", "redhat", "fedora" ] => {
     "default" => packages
   },
   [ "debian", "ubuntu" ] => {
-    "default" => %w{ php5-mcrypt }
+    "default" => %w{ php5-imagick }
   }
 )
 
@@ -40,8 +38,4 @@ pkgs.each do |pkg|
   package pkg do
     action :install
   end
-end
-
-template "#{node['php']['ext_conf_dir']}/mcrypt.ini" do
-  mode "0644"
 end

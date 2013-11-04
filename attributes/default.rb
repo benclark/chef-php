@@ -26,6 +26,7 @@ default['php']['directives'] = {}
 
 case node['platform_family']
 when 'rhel', 'fedora'
+  default['php']['ius']           = '5.3'
   default['php']['conf_dir']      = '/etc'
   default['php']['ext_conf_dir']  = '/etc/php.d'
   default['php']['ext_dir']       = "/usr/#{lib_dir}/php/modules"
