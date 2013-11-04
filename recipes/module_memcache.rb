@@ -19,17 +19,26 @@
 # limitations under the License.
 #
 
-case node['platform_family']
-when 'rhel', 'fedora'
-  package 'zlib-devel' do
-    action :install
-  end
 
-  php_pear 'memcache' do
-    action :install
-  end
-when 'debian'
-  package 'php5-memcache' do
+if node['php']['ius'] == "5.4"
+      packages = %w{ php54-pecl-memcache }
+elsif node['php']['ius'] == "5.3"
+      packages = %w{ php53u-pecl-memcache }
+else
+      packages = %w{ php-pecl-memcache }
+end
+
+pkgs = value_for_platform(
+  [ "centos", "redhat", "fedora", "amazon", "scientific" ] => {
+    "default" => packages
+  },
+  [ "debian", "ubuntu" ] => {
+    "default" => %w{ php5-memcache }
+  }
+)
+
+pkgs.each do |pkg|
+  package pkg do
     action :install
   end
 end

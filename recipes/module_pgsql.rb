@@ -21,11 +21,25 @@
 # limitations under the License.
 #
 
-pkg = value_for_platform_family(
-    [ 'rhel', 'fedora' ] => 'php-pgsql',
-    'debian' => 'php5-pgsql'
+if node['php']['ius'] == "5.4"
+  packages = %w{ php54-pgsql }
+elsif node['php']['ius'] == "5.3"
+  packages = %w{ php53u-pgsql }
+else
+  packages = %w{ php-pgsql }
+end
+
+pkgs = value_for_platform(
+  [ "centos", "redhat", "fedora" ] => {
+    "default" => packages
+  },
+  [ "debian", "ubuntu" ] => {
+    "default" => %w{ php5-pgsql }
+  }
 )
 
-package pkg do
-  action :install
+pkgs.each do |pkg|
+  package pkg do
+    action :install
+  end
 end

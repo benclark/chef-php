@@ -19,11 +19,25 @@
 # limitations under the License.
 #
 
-pkg = value_for_platform_family(
-    [ 'rhel', 'fedora' ] => 'php-odbc',
-    'debian' => 'php5-odbc'
+if node['php']['ius'] == "5.4"
+  packages = %w{ php54-odbc }
+elsif node['php']['ius'] == "5.3"
+  packages = %w{ php53u-odbc }
+else
+  packages = %w{ php-odbc }
+end
+
+pkgs = value_for_platform(
+  [ "centos", "redhat", "fedora" ] => {
+    "default" => packages
+  },
+  [ "debian", "ubuntu" ] => {
+    "default" => %w{ php5-odbc }
+  }
 )
 
-package pkg do
-  action :install
+pkgs.each do |pkg|
+  package pkg do
+    action :install
+  end
 end

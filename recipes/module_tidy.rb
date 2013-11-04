@@ -19,11 +19,25 @@
 # limitations under the License.
 #
 
-pkg = value_for_platform_family(
-    [ 'rhel', 'fedora' ] => 'php-tidy',
-    'debian' => 'php5-tidy'
+if node['php']['ius'] == "5.4"
+  packages = %w{ php54-tidy }
+elsif node['php']['ius'] == "5.3"
+  packages = %w{ php53u-tidy }
+else
+  packages = %w{ php-tidy }
+end
+
+pkgs = value_for_platform(
+  [ "centos", "redhat", "fedora" ] => {
+    "default" => packages
+  },
+  [ "debian", "ubuntu" ] => {
+    "default" => %w{ php5-tidy }
+  }
 )
 
-package pkg do
-  action :install
+pkgs.each do |pkg|
+  package pkg do
+    action :install
+  end
 end

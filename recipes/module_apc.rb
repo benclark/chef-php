@@ -21,20 +21,25 @@
 # limitations under the License.
 #
 
-case node['platform_family']
-when 'rhel', 'fedora'
-  %w{ httpd-devel pcre pcre-devel }.each do |pkg|
-    package pkg do
-      action :install
-    end
-  end
+if node['php']['ius'] == "5.4"
+  packages = %w{ php54-pecl-apc }
+elsif node['php']['ius'] == "5.3"
+  packages = %w{ php53u-pecl-apc }
+else
+  packages = %w{ php-pecl-apc }
+end
 
-  package 'php-pecl-apc' do
-    action :install
-  end
-  
-when 'debian'
-  package 'php-apc' do
+pkgs = value_for_platform(
+  [ "centos", "redhat", "fedora" ] => {
+    "default" => packages
+  },
+  [ "debian", "ubuntu" ] => {
+    "default" => %w{ php-apc }
+  }
+)
+
+pkgs.each do |pkg|
+  package pkg do
     action :install
   end
 end

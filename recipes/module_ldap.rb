@@ -21,11 +21,25 @@
 # limitations under the License.
 #
 
-pkg = value_for_platform_family(
-    [ 'rhel', 'fedora' ] => 'php-ldap',
-    'debian' => 'php5-ldap'
+if node['php']['ius'] == "5.4"
+  packages = %w{ php54-ldap }
+elsif node['php']['ius'] == "5.3"
+  packages = %w{ php53u-ldap }
+else
+  packages = %w{ php-ldap }
+end
+
+pkgs = value_for_platform(
+  [ "centos", "redhat", "fedora" ] => {
+    "default" => packages
+  },
+  [ "debian", "ubuntu" ] => {
+    "default" => %w{ php5-ldap }
+  }
 )
 
-package pkg do
-  action :install
+pkgs.each do |pkg|
+  package pkg do
+    action :install
+  end
 end

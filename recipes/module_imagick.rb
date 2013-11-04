@@ -1,10 +1,8 @@
 #
-# Author::  Panagiotis Papadomitsos (<pj@ezgr.net>)
+# Cookbook Name:: chef-php-extra
+# Recipe:: module_imagick
 #
-# Cookbook Name:: php
-# Recipe:: module_sqlite
-#
-# Copyright 2009-2012, Panagiotis Papadomitsos
+# Copyright 2012, Alistair Stead
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,11 +17,25 @@
 # limitations under the License.
 #
 
-pkg = value_for_platform_family(
-    [ 'rhel', 'fedora' ] => 'php-sqlite',
-    'debian' => 'php5-sqlite'
+if node['php']['ius'] == "5.4"
+  packages = %w{ php54-imagick }
+elsif node['php']['ius'] == "5.3"
+  packages = %w{ php53u-imagick }
+else
+  packages = %w{ php-imagick }
+end
+
+pkgs = value_for_platform(
+  [ "centos", "redhat", "fedora" ] => {
+    "default" => packages
+  },
+  [ "debian", "ubuntu" ] => {
+    "default" => %w{ php5-imagick }
+  }
 )
 
-package pkg do
-  action :install
+pkgs.each do |pkg|
+  package pkg do
+    action :install
+  end
 end

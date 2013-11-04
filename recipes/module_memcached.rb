@@ -1,10 +1,8 @@
 #
-# Author::  Joshua Timberman (<joshua@opscode.com>)
-# Author::  Seth Chisamore (<schisamo@opscode.com>)
-# Cookbook Name:: php
-# Recipe:: module_fpdf
+# Cookbook Name:: chef-php-extra
+# Recipe:: module_memcache
 #
-# Copyright 2009-2011, Opscode, Inc.
+# Copyright 2012, Alistair Stead
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,17 +17,27 @@
 # limitations under the License.
 #
 
-case node['platform_family']
-when 'rhel', 'fedora'
-  pearhub_chan = php_pear_channel 'pearhub.org' do
-    action :discover
-  end
-  php_pear 'FPDF' do
-    channel pearhub_chan.channel_name
-    action :install
-  end
-when 'debian'
-  package 'php-fpdf' do
+include_recipe "chef-php-extra"
+
+if node['php']['ius'] == "5.4"
+      packages = %w{ }
+elsif node['php']['ius'] == "5.3"
+      packages = %w{ php53u-pecl-memcached }
+else
+      packages = %w{ php-pecl-memcached }
+end
+
+pkgs = value_for_platform(
+  [ "centos", "redhat", "fedora", "amazon", "scientific" ] => {
+    "default" => packages
+  },
+  [ "debian", "ubuntu" ] => {
+    "default" => %w{ php5-memcached }
+  }
+)
+
+pkgs.each do |pkg|
+  package pkg do
     action :install
   end
 end

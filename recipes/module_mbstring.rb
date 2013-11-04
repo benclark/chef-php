@@ -21,7 +21,25 @@
 
 # mbstring is compiled in PHP on Debian
 
-package 'php-mbstring' do
-  action :install
-  only_if { platform_family?('rhel', 'fedora') }
+if node['php']['ius'] == "5.4"
+      packages = %w{ php54-mbstring }
+elsif node['php']['ius'] == "5.3"
+      packages = %w{ php53u-mbstring }
+else
+      packages = %w{ php-mbstring }
+end
+
+pkgs = value_for_platform(
+  [ "centos", "redhat", "fedora" ] => {
+    "default" => packages
+  },
+  [ "debian", "ubuntu" ] => {
+    "default" => %w{ php-mbstring }
+  }
+)
+
+pkgs.each do |pkg|
+  package pkg do
+    action :install
+  end
 end

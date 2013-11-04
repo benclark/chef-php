@@ -19,11 +19,25 @@
 # limitations under the License.
 #
 
-pkg = value_for_platform_family(
-    [ 'rhel', 'fedora' ] => 'php-intl',
-    'debian' => 'php5-intl'
+if node['php']['ius'] == "5.4"
+  packages = %w{ php54-intl }
+elsif node['php']['ius'] == "5.3"
+  packages = %w{ php53u-intl }
+else
+  packages = %w{ php-intl }
+end
+
+pkgs = value_for_platform(
+  [ "centos", "redhat", "fedora" ] => {
+    "default" => packages
+  },
+  [ "debian", "ubuntu" ] => {
+    "default" => %w{ php5-intl }
+  }
 )
 
-package pkg do
-  action :install
+pkgs.each do |pkg|
+  package pkg do
+    action :install
+  end
 end

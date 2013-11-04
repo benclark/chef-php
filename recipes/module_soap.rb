@@ -21,7 +21,25 @@
 
 # Ubuntu/Debian already ship SOAP with the PHP common package
 
-package 'php-soap' do
-  action :install
-  only_if { platform_family?( 'rhel', 'fedora' ) }
+if node['php']['ius'] == "5.4"
+      packages = %w{ php54-soap }
+elsif node['php']['ius'] == "5.3"
+      packages = %w{ php53u-soap }
+else
+      packages = %w{ php-soap }
+end
+
+pkgs = value_for_platform(
+  [ "centos", "redhat", "fedora" ] => {
+    "default" => packages
+  },
+  [ "debian", "ubuntu" ] => {
+    "default" => %w{ php-soap }
+  }
+)
+
+pkgs.each do |pkg|
+  package pkg do
+    action :install
+  end
 end
