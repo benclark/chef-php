@@ -44,8 +44,8 @@ pkgs = value_for_platform(
 
 pkgs.each do |pkg|
   package pkg do
-    action :nothing
-  end.run_action(:install)
+    action :install
+  end
 end
 
 template "#{node['php']['conf_dir']}/php.ini" do
