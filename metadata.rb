@@ -8,7 +8,7 @@ version           IO.read(File.join(File.dirname(__FILE__), 'VERSION')).chomp re
 
 depends           'build-essential'
 depends           'xml'
-depends           'yum'
+depends           'yum', '~> 2.3.4'
 
 suggests          'apache2'
 suggests          'nginx'
