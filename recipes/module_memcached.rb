@@ -17,8 +17,6 @@
 # limitations under the License.
 #
 
-include_recipe "chef-php-extra"
-
 if node['php']['ius'] == "5.4"
       packages = %w{ }
 elsif node['php']['ius'] == "5.3"
