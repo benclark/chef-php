@@ -13,13 +13,13 @@ apc.include_once_override = <%= node['php']['apc']['include_once_override'] %>
 apc.localcache = <%= node['php']['apc']['localcache'] %>
 apc.localcache.size = <%= node['php']['apc']['local_size'] %>
 apc.max_file_size = <%= node['php']['apc']['max_file_size'] %>
-apc.mmap_file_mask = <%= node['php']['apc']['mmap_file_mask'] %>
+apc.mmap_file_mask = "<%= node['php']['apc']['mmap_file_mask'] %>"
 apc.num_files_hint = <%= node['php']['apc']['num_files_hint'] %>
 apc.report_autofilter = <%= node['php']['apc']['report_autofilter'] %>
 apc.rfc1867 = <%= node['php']['apc']['rfc1867'] %>
-apc.rfc1867_freq = <%= node['php']['apc']['rfc1867_freq'] %>
-apc.rfc1867_name = <%= node['php']['apc']['rfc1867_name'] %>
-apc.rfc1867_prefix = <%= node['php']['apc']['rfc1867_prefix'] %>
+apc.rfc1867_freq = "<%= node['php']['apc']['rfc1867_freq'] %>"
+apc.rfc1867_name = "<%= node['php']['apc']['rfc1867_name'] %>"
+apc.rfc1867_prefix = "<%= node['php']['apc']['rfc1867_prefix'] %>"
 apc.shm_segments = <%= node['php']['apc']['shm_segments'] %>
 apc.shm_size = <%= node['php']['apc']['shm_size'] %>
 apc.stat = <%= node['php']['apc']['stat'] %>
