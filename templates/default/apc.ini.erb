@@ -2,30 +2,30 @@
 
 [apc]
 extension = apc.so
-apc.enabled = 1
+apc.enabled = <%= node['php']['apc']['enabled'] %>
 
-apc.cache_by_default = 1
-apc.coredump_unmap = 1
-apc.enable_cli = 0
-apc.file_update_protection = 2
-apc.gc_ttl = 3600
-apc.include_once_override = 0
-apc.localcache = 1
+apc.cache_by_default = <%= node['php']['apc']['cache_by_default'] %>
+apc.coredump_unmap = <%= node['php']['apc']['coredump_unmap'] %>
+apc.enable_cli = <%= node['php']['apc']['enable_cli'] %>
+apc.file_update_protection = <%= node['php']['apc']['file_update_protection'] %>
+apc.gc_ttl = <%= node['php']['apc']['gc_ttl'] %>
+apc.include_once_override = <%= node['php']['apc']['include_once_override'] %>
+apc.localcache = <%= node['php']['apc']['localcache'] %>
 apc.localcache.size = <%= node['php']['apc']['local_size'] %>
-apc.max_file_size = 128K
-apc.mmap_file_mask = "/apc.shm.XXXXXX"
-apc.num_files_hint = 1024
-apc.report_autofilter = 0
-apc.rfc1867 = 1
-apc.rfc1867_freq = "5"
-apc.rfc1867_name = "APC_UPLOAD_PROGRESS"
-apc.rfc1867_prefix = "upload_"
-apc.shm_segments = 1
+apc.max_file_size = <%= node['php']['apc']['max_file_size'] %>
+apc.mmap_file_mask = <%= node['php']['apc']['mmap_file_mask'] %>
+apc.num_files_hint = <%= node['php']['apc']['num_files_hint'] %>
+apc.report_autofilter = <%= node['php']['apc']['report_autofilter'] %>
+apc.rfc1867 = <%= node['php']['apc']['rfc1867'] %>
+apc.rfc1867_freq = <%= node['php']['apc']['rfc1867_freq'] %>
+apc.rfc1867_name = <%= node['php']['apc']['rfc1867_name'] %>
+apc.rfc1867_prefix = <%= node['php']['apc']['rfc1867_prefix'] %>
+apc.shm_segments = <%= node['php']['apc']['shm_segments'] %>
 apc.shm_size = <%= node['php']['apc']['shm_size'] %>
-apc.stat = 1
+apc.stat = <%= node['php']['apc']['stat'] %>
 apc.ttl = <%= node['php']['apc']['ttl'] %>
 apc.user_ttl = <%= node['php']['apc']['user_ttl'] %>
-apc.write_lock = 1
-apc.optimization = 0
-apc.stat_ctime = 1
-apc.canonicalize = 1
+apc.write_lock = <%= node['php']['apc']['write_lock'] %>
+apc.optimization = <%= node['php']['apc']['optimization'] %>
+apc.stat_ctime = <%= node['php']['apc']['stat_ctime'] %>
+apc.canonicalize = <%= node['php']['apc']['canonicalize'] %>
