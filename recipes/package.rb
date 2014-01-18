@@ -21,7 +21,7 @@
 #
 
 if node['php']['ius'] != false and platform?("redhat", "centos", "fedora", "amazon", "scientific")
-  include_recipe "yum::ius"
+  include_recipe "php::package_ius"
 end
 
 if node['php']['ius'] == "5.4"
