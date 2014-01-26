@@ -18,6 +18,8 @@
 # limitations under the License.
 #
 
+include_recipe 'build-essential'
+
 if node['php']['ius'] == "5.4"
   packages = %w{ php54-devel }
 elsif node['php']['ius'] == "5.3"
